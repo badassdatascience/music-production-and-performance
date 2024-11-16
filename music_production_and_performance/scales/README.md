@@ -2,7 +2,7 @@
 
 This directory contains several scale formulations, as I figure out which formulations make the most sense moving forward.
 
-All scales are defined here are C based. Anything else can be calculated from these.
+All scales defined here are C based. For tonal music, a scale based on any other tonic can be calculated from these definitions.
 
 ## Chromatic Formulations
 
