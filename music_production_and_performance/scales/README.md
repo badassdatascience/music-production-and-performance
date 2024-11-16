@@ -1,6 +1,8 @@
+# Scale Formulations
+
 This directory contains several scale formulations, as I figure out which formulations make the most sense moving forward.
 
-All scales are C based.
+All scales are defined here are C based. Anything else can be calculated from these.
 
 ## Chromatic Formulations
 
