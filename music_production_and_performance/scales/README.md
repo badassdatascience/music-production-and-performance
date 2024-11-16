@@ -10,4 +10,4 @@ Here I wrestle with enharmonic spellings.
 
 ## C Major Formulation
 
-This formulation is (will be) used for transposition such that interval and enharmonic considerations are propagated through the transposition process in a manner consistent with Western classical music theory circa 1800.
+This formulation is (will be) used for transposition such that interval and enharmonic considerations are propagated through the transposition process in a manner consistent with Western classical music theory circa 1820.
