@@ -4,7 +4,7 @@ I wrote this content to help me automatically curate material for my DJ sets. Th
 
 ## Programmatically Generating Mixed In Key's Camelot Wheel
 
-The "Camelot Wheel", shown below, is a tool that helps DJs perform consonant key transitions when mixing a new track into an already playing track. Here is what one looks like (from Mixed In Key's harmonic mixing page):
+The "Camelot Wheel", shown below, is a tool that helps DJs perform consonant key transitions when mixing a new track into an already playing track. Here is what one looks like (from [Mixed In Key's harmonic mixing page](https://mixedinkey.com/wp-content/uploads/2020/04/Camelot-Wheel-Mixed-In-Key-Harmonic-Mixing.png)):
 
 <img src="Camelot-Wheel-Mixed-In-Key-Harmonic-Mixing.png" alt="CW" width="400"/>
 
