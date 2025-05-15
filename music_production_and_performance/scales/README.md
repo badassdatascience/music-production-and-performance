@@ -11,3 +11,7 @@ Here I wrestle with enharmonic spellings.
 ## C Major Formulation
 
 This formulation is (will be) used for transposition such that interval and enharmonic considerations are propagated through the transposition process in a manner consistent with Western classical music theory circa 1820.
+
+## Future plans
+
+The scale formulations in this directory differ from those in the "DJ" directory. At some point I will refactor these to use the same structure.
