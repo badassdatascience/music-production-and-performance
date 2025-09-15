@@ -19,4 +19,4 @@ class CircleOfFifths():
         self.circle_of_fifths_numeric = np.array(circle_of_fifths, dtype = np.uint8)
 
     def compute_circle_of_fifths_pitch_class_names(self):
-        self.circle_of_fifths = list(self.chromatic_scale_pitch_classes[self.circle_of_fifths_numeric])
+        self.circle_of_fifths = self.chromatic_scale_pitch_classes[self.circle_of_fifths_numeric]
