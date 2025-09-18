@@ -33,6 +33,3 @@ df.to_csv(config['output_path'] + '/circle_of_fifths.csv', index = False)
 # We'll deal with that later:                                                                                  
 #                                                                                                              
 Fifths.load_circle_of_fifths(cf)
-
-    
-
