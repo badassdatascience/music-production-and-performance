@@ -1,22 +1,12 @@
+#
+# import the Django boilerplate code
+#
+import music_production_and_performance.django.django_boilerplate
 
-import django
-from django.conf import settings
-
-settings.configure(
-    DEBUG=True,
-    INSTALLED_APPS=['theory_western.apps.TheoryWesternConfig'],
-    DATABASES = {
-        'default' : {
-            'ENGINE' : 'django.db.backends.sqlite3',
-            'NAME' : '/Users/emily/Desktop/projects/music-production-and-performance/music_production_and_performance/django/db.sqlite3',
-        }
-    }
-)
-
-django.setup()
-
+#
+# import useful modules and scales
+#
 from theory_western.models import PitchClass
-
 from music_production_and_performance.theory.western.definitions import chromatic_scale_pitch_class_names
 from music_production_and_performance.theory.western.definitions import enharmonics_map
 

@@ -1,28 +1,20 @@
+#
+# import the Django boilerplate code
+#
+import music_production_and_performance.django.django_boilerplate
 
-import django
-from django.conf import settings
-
-settings.configure(
-    DEBUG=True,
-    INSTALLED_APPS=['theory_western.apps.TheoryWesternConfig'],
-    DATABASES = {
-        'default' : {
-            'ENGINE' : 'django.db.backends.sqlite3',
-            'NAME' : '/Users/emily/Desktop/projects/music-production-and-performance/music_production_and_performance/django/db.sqlite3',
-        }
-    }
-)
-
-django.setup()
-
+#
+# import useful modules
+#
 from theory_western.models import PitchClass
 from theory_western.models import Fifths
-
 from music_production_and_performance.theory.western.CircleOfFifths import CircleOfFifths
 
+#
+# calculate the circle of fifths
+#
 cf = CircleOfFifths()
 n = len(cf.circle_of_fifths)
-
 
 #                                                                                                              
 # The enharmonic spellings don't quite make sense here                                                         
