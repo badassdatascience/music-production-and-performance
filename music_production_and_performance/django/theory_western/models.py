@@ -29,3 +29,10 @@ class Fifths(models.Model):
 class IntervalSeries(models.Model):
     name = models.CharField(max_length = 200, unique = True)
     series = models.JSONField()
+
+    def reconstruct(self, base = 0):
+        reconstructed_list = [base]
+        for interval in self.series:
+            base = (base + interval) % 12
+            reconstructed_list.append(base)
+        return reconstructed_list
