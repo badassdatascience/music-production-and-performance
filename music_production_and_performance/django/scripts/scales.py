@@ -11,15 +11,9 @@
 # import the Django boilerplate code
 #
 import music_production_and_performance.django.django_boilerplate
-##from music_production_and_performance.config import config
 
-from theory_western.models import PitchClass
+from theory_western.models import PitchClass, IntervalSeries
 from music_production_and_performance.theory.western.scales.scales import *
-
-print()
-print(scale_Major)
-print(scale_minor)
-print()
 
 def get_pitchclass_list_by_pitchclass_name(pitch_class_list):
     pitch_class_object_list = []
@@ -38,14 +32,51 @@ def get_pitchclass_object_list_by_pitchclass_name(pitch_class_name_list):
 def compute_interval_list(numeric_list):
     return [y - x for x, y in zip(numeric_list[0:-1], numeric_list[1:])]
 
+#
+# load
+#
+if False:
+    for scale_dict in [scale_Major, scale_minor]:
+        scale_by_pitch_class_name = scale_dict['scale_base_c']['scale_by_name']
+        numeric_list = get_pitchclass_object_list_by_pitchclass_name(scale_by_pitch_class_name)
+        interval_list = compute_interval_list(numeric_list)
+        
+        series_name = scale_dict['name']
+        interval_list_dict_for_json = interval_list
+    
+        interval_series = IntervalSeries(
+            name = series_name,
+            series = interval_list_dict_for_json,
+        )
+        interval_series.save()
 
-for scale_dict in [scale_Major, scale_minor]:
-    scale_by_pitch_class_name = scale_dict['scale_base_c']['scale_by_name']
-    numeric_list = get_pitchclass_object_list_by_pitchclass_name(scale_by_pitch_class_name)
-    interval_list = compute_interval_list(numeric_list)
 
-    print()
-    print(interval_list)
+#
+# query
+#
+
+
+
+def get_interval_list_by_name(series_name):
+    interval_series = IntervalSeries.objects.get(name = series_name)
+    return interval_series.series
+
+#
+# think about adding a modulus operator...
+#
+def reconstruct(series_list, base = 0):
+    reconstructed_list = [base]
+    for interval in series_list:
+        base = (base + interval) % 12
+        reconstructed_list.append(base)
+    return reconstructed_list
+
 
 print()
+for series_name in ['Major', 'minor']:
+    interval_list = get_interval_list_by_name(series_name)
+    print(series_name, interval_list, type(interval_list))
+    print(reconstruct(interval_list, base = 3))
 
+    print()
+    
