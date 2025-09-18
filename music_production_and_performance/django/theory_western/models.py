@@ -53,9 +53,6 @@ class PitchClass(models.Model):
             except:
                 pass
 
-            
-    
-# need a uniqueness constraint
 class Fifths(models.Model):
     pitch_class_below = models.ForeignKey(
         PitchClass,
@@ -70,6 +67,32 @@ class Fifths(models.Model):
         on_delete = models.CASCADE,
         related_name = 'pitch_class_fifth_above',
     )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields = ['pitch_class_below', 'pitch_class', 'pitch_class_above'],
+                name = 'unique_fifths'
+            )
+        ]
+
+    #
+    # this is a static function; refactoring into a class method might be cleaner
+    #
+    def load_circle_of_fifths(cf):
+        n = len(cf.circle_of_fifths)
+        for i in range(0, n):
+            pc_below = PitchClass.objects.get(name = cf.circle_of_fifths[(i - 1) % n])
+            pc = PitchClass.objects.get(name = cf.circle_of_fifths[i % n])
+            pc_above = PitchClass.objects.get(name = cf.circle_of_fifths[(i + 1) % n])
+
+            fifths = Fifths(
+                pitch_class_below = pc_below,
+                pitch_class = pc,
+                pitch_class_above = pc_above,
+            )
+            fifths.save()
+
 
 class IntervalSeries(models.Model):
     name = models.CharField(max_length = 200, unique = True)
