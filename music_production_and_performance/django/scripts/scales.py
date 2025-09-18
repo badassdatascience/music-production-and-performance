@@ -57,21 +57,6 @@ if False:
 
 
 
-#def get_interval_list_by_name(series_name):
-#    interval_series = IntervalSeries.objects.get(name = series_name)
-#    return interval_series.series
-
-#
-# think about adding a modulus operator...
-#
-#def reconstruct(series_list, base = 0):
-#    reconstructed_list = [base]
-#    for interval in series_list:
-#        base = (base + interval) % 12
-#        reconstructed_list.append(base)
-#    return reconstructed_list
-
-
 print()
 for series_name in ['Major', 'minor']:
     interval_series = IntervalSeries.objects.get(name = series_name)
