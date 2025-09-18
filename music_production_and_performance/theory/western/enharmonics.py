@@ -17,8 +17,7 @@ enharmonics_map = {
 }
 
 #
-# define a C-based chromatic scale with its enharmonic spellings (up to two accidentals per spelling)                         
-#
+# define a C-based chromatic scale with its enharmonic spellings (up to two accidentals per spelling)                    #
 # We are not using this at the moment; keeping it around
 # while I decide whether this approach makes sense in any
 # way:
