@@ -2,6 +2,9 @@ from django.db import models
 
 # Create your models here.
 
+#
+# Define model for storing pitch class information
+#
 class PitchClass(models.Model):
     name = models.CharField(max_length = 200, unique = True)
     chromatic_index_base_c = models.IntegerField()
@@ -10,6 +13,9 @@ class PitchClass(models.Model):
     camelot_major_number = models.IntegerField(null = True)
     comment = models.TextField(null = True)
 
+    #
+    # Function to load initial chromatic scale by note names
+    # (enharmonic spellings are addressed below)
     #
     # need to add a specific exception for uniqueness violation
     #
@@ -27,6 +33,8 @@ class PitchClass(models.Model):
             except:
                 pass
 
+    #
+    # Function to load enharmonic spelling information
     #
     # need to deal with specific exception for uniqueness violations
     #
@@ -62,8 +70,13 @@ class PitchClass(models.Model):
                 pc.camelot_major_number = row['camelot_major']
                 pc.save()
 
-
-            
+#
+# Define model to store pitch class relationships
+# based on an interval of a perfect fifth.
+#
+# Used to store circle of fifths information
+# which helps facilate harmonic mixing for DJs:
+#            
 class Fifths(models.Model):
     pitch_class_below = models.ForeignKey(
         PitchClass,
@@ -79,6 +92,9 @@ class Fifths(models.Model):
         related_name = 'pitch_class_fifth_above',
     )
 
+    #
+    # uniqueness constraint
+    #
     class Meta:
         constraints = [
             models.UniqueConstraint(
@@ -87,6 +103,8 @@ class Fifths(models.Model):
             )
         ]
 
+    #
+    # Given a CircleOfFifths object, load its content into the database
     #
     # this is a static function; refactoring into a class method might be cleaner
     #
@@ -104,11 +122,19 @@ class Fifths(models.Model):
             )
             fifths.save()
 
-
+#
+# Define a class for storing musical note sequences
+# as lists of intervals
+#
 class IntervalSeries(models.Model):
     name = models.CharField(max_length = 200, unique = True)
     series = models.JSONField()
 
+    #
+    # Given a base note expressed in numeric (chromatic)
+    # form, reconstruct the notes based on the
+    # interval series:
+    #
     def reconstruct(self, base = 0, use_modulus = True):
         reconstructed_list = [base]
         for interval in self.series:
