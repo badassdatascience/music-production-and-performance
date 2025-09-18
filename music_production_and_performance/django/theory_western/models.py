@@ -25,3 +25,7 @@ class Fifths(models.Model):
         on_delete = models.CASCADE,
         related_name = 'pitch_class_fifth_above',
     )
+
+class IntervalSeries(models.Model):
+    name = models.CharField(max_length = 200, unique = True)
+    series = models.JSONField()
