@@ -1,11 +1,14 @@
 import numpy as np
 
+from music_production_and_performance.theory.western.definitions import chromatic_scale_pitch_class_names
+from music_production_and_performance.theory.western.definitions import chromatic_scale_numeric
+
 class CircleOfFifths():
 
     def __init__(
         self,
-        chromatic_scale_pitch_classes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'],
-        chromatic_scale_numeric = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+        chromatic_scale_pitch_classes = chromatic_scale_pitch_class_names,
+        chromatic_scale_numeric = chromatic_scale_numeric,
     ):
         self.chromatic_scale_numeric = np.array(chromatic_scale_numeric)
         self.chromatic_scale_pitch_classes = np.array(chromatic_scale_pitch_classes)
