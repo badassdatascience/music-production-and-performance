@@ -11,6 +11,11 @@ import pandas as pd
 from theory_western.models import PitchClass
 
 #
+# user settings
+#
+do_qc = False
+
+#
 # load the circle of fifths
 #
 df = pd.read_csv(config['output_path'] + '/circle_of_fifths.csv')
@@ -39,9 +44,10 @@ df = pd.DataFrame(
 #
 # QC by the "eyeball" test
 #
-print()
-print(df)
-print()
+if do_qc:
+    print()
+    print(df)
+    print()
 
 #
 # load into the relevent PitchClass
