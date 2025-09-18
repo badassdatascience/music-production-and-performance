@@ -59,7 +59,4 @@ for same_enharmonic_spellings in chromatic_c_based_enharmonic_spellings:
             
 np.max(np.int8(diatonic_c_major_scale_by_name_constructed == diatonic_c_major_scale_by_name)) == 1
 
-#
-# another formulation of the chromatic scale
-#
-chromatic_scale_basic = ['C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B']
+
