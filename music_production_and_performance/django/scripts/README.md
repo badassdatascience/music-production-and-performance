@@ -16,4 +16,6 @@ python scripts/populate_pitch_classes.py
 python scripts/populate_fifths.py
 
 python scripts/load_camelot_numbers.py
+
+python scripts/scales.py
 ```
