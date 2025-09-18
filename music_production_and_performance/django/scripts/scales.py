@@ -42,7 +42,10 @@ def compute_interval_list(numeric_list):
 for scale_dict in [scale_Major, scale_minor]:
     scale_by_pitch_class_name = scale_dict['scale_base_c']['scale_by_name']
     numeric_list = get_pitchclass_object_list_by_pitchclass_name(scale_by_pitch_class_name)
-    print(scale_dict['name'])
-    print(compute_interval_list(numeric_list))
+    interval_list = compute_interval_list(numeric_list)
+
     print()
+    print(interval_list)
+
+print()
 
