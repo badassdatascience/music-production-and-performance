@@ -7,8 +7,8 @@ import music_production_and_performance.django.django_boilerplate
 # import useful modules and scales
 #
 from theory_western.models import PitchClass
-from music_production_and_performance.theory.western.definitions import chromatic_scale_pitch_class_names
-from music_production_and_performance.theory.western.definitions import enharmonics_map
+from music_production_and_performance.theory.western.scales.chromatic import chromatic_scale_pitch_class_names
+from music_production_and_performance.theory.western.enharmonics import enharmonics_map
 
 
 for i, pc_name in enumerate(chromatic_scale_pitch_class_names):
