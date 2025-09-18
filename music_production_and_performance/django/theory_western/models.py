@@ -53,6 +53,17 @@ class PitchClass(models.Model):
             except:
                 pass
 
+    def bulk_load_camelot_numbers_and_scales(df):
+        for i, row in df.iterrows():
+            chromatic_index_base_c = row['pitch_class_numeric']
+            pitch_classes = PitchClass.objects.filter(chromatic_index_base_c = chromatic_index_base_c)
+            for pc in pitch_classes:
+                pc.camelot_minor_number = row['camelot_minor']
+                pc.camelot_major_number = row['camelot_major']
+                pc.save()
+
+
+            
 class Fifths(models.Model):
     pitch_class_below = models.ForeignKey(
         PitchClass,
