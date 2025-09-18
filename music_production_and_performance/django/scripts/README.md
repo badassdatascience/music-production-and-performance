@@ -1,5 +1,4 @@
-
-Order to run the scripts in:
+These scripts populate the database. Here is the order to run them in:
 
 ```
 cd music_production_and_performance/django
