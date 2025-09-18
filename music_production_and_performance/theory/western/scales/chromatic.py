@@ -8,4 +8,10 @@ chromatic_scale_pitch_class_names = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 
 chromatic_scale_numeric = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
 
-    
+#
+# another formulation of the chromatic scale
+#
+# we are not using this so far, just keeping an idea around
+#
+chromatic_scale_alt_formulation = ['C', 'C#/Db', 'D', 'D#/Eb', 'E', 'F', 'F#/Gb', 'G', 'G#/Ab', 'A', 'A#/Bb', 'B']
+
