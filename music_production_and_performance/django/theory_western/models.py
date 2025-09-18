@@ -6,6 +6,8 @@ class PitchClass(models.Model):
     name = models.CharField(max_length = 200, unique = True)
     chromatic_index_base_c = models.IntegerField()
     enharmonics = models.ManyToManyField('self')
+    camelot_minor_number = models.IntegerField(null = True)
+    camelot_major_number = models.IntegerField(null = True)
     comment = models.TextField(null = True)
 
 # need a uniqueness constraint
