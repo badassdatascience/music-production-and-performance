@@ -36,24 +36,21 @@ def get_librosa_scientific_pitch_notation_to_hz(pitch_in_scientific_notation):
 def get_librosa_scientific_pitch_notation_to_MIDI(pitch_in_scientific_notation):
     return librosa.note_to_midi(pitch_in_scientific_notation)
 
-
-
-
+#
+# tests
+#
 if __name__ == '__main__':
-    print()
-    print(calculate_frequency(60))
-    print(get_librosa_scientific_pitch_notation_to_hz('C4'))
-    print()
-    print(calculate_frequency(69))
-    print(get_librosa_scientific_pitch_notation_to_hz('A4'))
-    print()
-    print(get_librosa_scientific_pitch_notation_to_MIDI('C4'))
-    print(get_librosa_scientific_pitch_notation_to_MIDI('A4'))
+    assert(np.round(calculate_frequency(60), 4) == 261.6256)
+    assert(np.round(calculate_frequency(69), 1) == 440.0)
+    
+    assert(np.round(get_librosa_scientific_pitch_notation_to_hz('C4'), 4) == 261.6256)
+    assert(np.round(get_librosa_scientific_pitch_notation_to_hz('A4'), 1) == 440.0)
 
-    print()
-    print(get_librosa_scientific_pitch_notation_to_MIDI('Cb4'))
-    print(get_librosa_scientific_pitch_notation_to_MIDI('C#4'))
-    print(get_librosa_scientific_pitch_notation_to_MIDI('Ab4'))
-    print(get_librosa_scientific_pitch_notation_to_MIDI('Abb4'))
-    print(get_librosa_scientific_pitch_notation_to_MIDI('C##4'))
-    print()
+    assert(get_librosa_scientific_pitch_notation_to_MIDI('C4') == 60)
+    assert(get_librosa_scientific_pitch_notation_to_MIDI('A4') == 69)
+
+    assert(get_librosa_scientific_pitch_notation_to_MIDI('Cb4') == 59)
+    assert(get_librosa_scientific_pitch_notation_to_MIDI('C#4') == 61)
+    assert(get_librosa_scientific_pitch_notation_to_MIDI('Ab4') == 68)
+    assert(get_librosa_scientific_pitch_notation_to_MIDI('Abb4') == 67)
+    assert(get_librosa_scientific_pitch_notation_to_MIDI('C##4') == 62)
