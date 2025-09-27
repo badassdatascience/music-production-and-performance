@@ -11,6 +11,11 @@ import pandas as pd
 from theory_western.models import PitchClass
 
 #
+# user settings
+#
+do_qc = True
+
+#
 # load the circle of fifths
 #
 df = pd.read_csv(config['output_path'] + '/circle_of_fifths.csv')
@@ -39,20 +44,15 @@ df = pd.DataFrame(
 #
 # QC by the "eyeball" test
 #
-print()
-print(df)
-print()
+if do_qc:
+    print()
+    print(df)
+    print()
 
 #
 # load into the relevent PitchClass
 #
-for i, row in df.iterrows():
-    chromatic_index_base_c = row['pitch_class_numeric']
-    pitch_classes = PitchClass.objects.filter(chromatic_index_base_c = chromatic_index_base_c)
-    for pc in pitch_classes:
-        pc.camelot_minor_number = row['camelot_minor']
-        pc.camelot_major_number = row['camelot_major']
-        pc.save()
+PitchClass.bulk_load_camelot_numbers_and_scales(df)
 
 
 
