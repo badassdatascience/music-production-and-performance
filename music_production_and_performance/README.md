@@ -18,7 +18,7 @@ Future additions to this directory will include software for altering RekordBox 
 
 Function(s) for computing frequency values for given notes, and, in the future, vice-versa.
 
-#### The "scales" directory
+#### The "theory/western/scales" directory
 
 Here I begin working out a framework for describing and using scale definitions. Very much a work in progress.
 
