@@ -43,4 +43,4 @@ def detect_key_using_chromagram(
     estimated_key_index = np.argmax(mean_chroma)
     estimated_key = chroma_to_key[estimated_key_index]
 
-    return estimated_key
+    return estimated_key, estimated_key_index
