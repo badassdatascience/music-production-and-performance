@@ -10,14 +10,23 @@ def MIDI_number_test_value_ranges(
     pitches_as_numbers : np.array,
     MIDI_min_allowed_value : np.int16 = 0,
     MIDI_max_allowed_value : np.int16 = 127,
-):
-    assert np.min(np.int8(pitches_as_numbers >= MIDI_min_allowed_value)) == 1
-    assert np.min(np.int8(pitches_as_numbers <= MIDI_max_allowed_value)) == 1
+) -> bool:
+
+    # test ranges
+    assert np.min(np.int8(pitches_as_numbers >= MIDI_min_allowed_value)) == 1, \
+        f"A number in your pitch series is smaller than the minimum accepted MIDI value of {MIDI_min_allowed_value}"
+    assert np.min(np.int8(pitches_as_numbers <= MIDI_max_allowed_value)) == 1, \
+        f"A number in your pitch series exceeds the maximum accepted MIDI value of {MIDI_max_allowed_value}"
 
     return True
-    
 
-        
+#
+#
+#
+def MIDI_number_to_pitch_class(
+    pitches_as_numbers : np.array,
+) -> np.array:
+    return pitches_as_numbers % 12
 
 #
 # define a function to extract octave numbers from MIDI notes
@@ -37,17 +46,15 @@ def MIDI_number_chromatic_transpose(
     verbose : bool = False,
     MIDI_min_allowed_value : np.int16 = 0,
     MIDI_max_allowed_value : np.int16 = 127,
-) -> (np.array, np.array):
+) -> (np.array, np.array, np.array):
 
+    #
+    # compute the transposition
+    #
     pitches_as_numbers = notes_as_numbers + chromatic_interval
-    octaves_of_the_pitches = MIDI_number_to_scientific_pitch_octave(pitches_as_numbers)
+    octaves_of_the_pitches_C_negative_1_based = MIDI_number_to_scientific_pitch_octave(pitches_as_numbers)
+    pitch_classes_zero_based = MIDI_number_to_pitch_class(pitches_as_numbers)
     
-    if verbose:
-        print('Sequence provided by user:', notes_as_numbers)
-        print('Chromatic interval provided by user:', chromatic_interval)
-        print('Transposed pitch numbers:', pitches_as_numbers)
-        print('Corresponding octaves:', octaves_of_the_pitches)
-        print()
     #
     # check note range and throw and exception if MIDI range is violated
     #
@@ -57,21 +64,30 @@ def MIDI_number_chromatic_transpose(
         MIDI_max_allowed_value = MIDI_max_allowed_value,
     )
 
-
-    #assert np.min(np.int8(pitches_as_numbers >= MIDI_min_allowed_value)) == 1
-    #assert np.min(np.int8(pitches_as_numbers <= MIDI_max_allowed_value)) == 1
-
-    return pitches_as_numbers, octaves_of_the_pitches
+    #
+    # optionally display summary of computation results
+    #
+    if verbose:
+        print('Sequence provided by user:', notes_as_numbers)
+        print('Chromatic interval provided by user:', chromatic_interval)
+        print('Transposed pitch numbers:', pitches_as_numbers)
+        print('Corresponding pitch classes:', pitch_classes_zero_based)
+        print('Corresponding octaves:', octaves_of_the_pitches_C_negative_1_based)
+        print()
+    
+    return pitches_as_numbers, pitch_classes_zero_based, octaves_of_the_pitches_C_negative_1_based
 
 
 
 def main():
     chromatic_scale_numeric = np.arange(0, 12)
     x = MIDI_number_chromatic_transpose(chromatic_scale_numeric, verbose = True)
-    x = MIDI_number_chromatic_transpose(chromatic_scale_numeric, chromatic_interval = -7, verbose = True)
+    #x = MIDI_number_chromatic_transpose(chromatic_scale_numeric, chromatic_interval = -7, verbose = True)
+    x = MIDI_number_chromatic_transpose(chromatic_scale_numeric, chromatic_interval = 0, verbose = True)
     x = MIDI_number_chromatic_transpose(chromatic_scale_numeric, chromatic_interval = 60, verbose = True)
     x = MIDI_number_chromatic_transpose(chromatic_scale_numeric, chromatic_interval = 110, verbose = True)
-    x = MIDI_number_chromatic_transpose(chromatic_scale_numeric, chromatic_interval = 120, verbose = True)
+    x = MIDI_number_chromatic_transpose(chromatic_scale_numeric, chromatic_interval = 108, verbose = True)
+    #x = MIDI_number_chromatic_transpose(chromatic_scale_numeric, chromatic_interval = 120, verbose = True)
     
 if __name__ == '__main__':
     main()
