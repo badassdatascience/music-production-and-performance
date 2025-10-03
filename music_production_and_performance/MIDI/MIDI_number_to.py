@@ -3,7 +3,6 @@
 #
 import numpy as np
 
-
 #
 # Convert MIDI number to frequency
 #
@@ -29,10 +28,6 @@ def MIDI_number_to_frequency(
 
     return frequency
 
-
-
-
-
 #
 # define a function to test for MIDI value range violation
 #
@@ -51,7 +46,7 @@ def MIDI_number_to_test_value_ranges(
     return True
 
 #
-#
+# identifies the pitch class of a given MIDI note number
 #
 def MIDI_number_to_pitch_class(
     pitches_as_numbers : np.array,
