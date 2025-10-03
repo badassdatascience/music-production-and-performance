@@ -7,7 +7,7 @@ scale_Major = {
 }
     
 scale_minor = {
-    'name' : 'minor',
+    'name' : 'Natural Minor',
     'scale_base_c' : {
         'scale_by_name' : ['C', 'D', 'Eb', 'F', 'G', 'Ab', 'Bb'],
     }
