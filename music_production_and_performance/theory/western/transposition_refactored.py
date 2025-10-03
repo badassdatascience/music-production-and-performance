@@ -3,10 +3,40 @@
 #
 import numpy as np
 
+
+#
+# Convert MIDI number to frequency
+#
+# (This defaults to 12-tone equal temperament,
+# and I haven't implemented anything else yet).
+#
+def MIDI_number_to_frequency(
+    midi_note_number : np.array, 
+    method : str = '12-tone equal temperament',
+    concert_frequency_a4 : np.float64 = 440.,
+    concert_midi_note_number_a4 : np.int16 = 69,
+) -> np.array:
+
+    #
+    # because we are not worrying about any other
+    # temperment at the moment
+    #
+    assert method == '12-tone equal temperament', \
+        f"Please use '12-tone equal temperament' as the method argument (the default), as I have not implemented anything else yet."
+    
+    if method == '12-tone equal temperament':
+        frequency = concert_frequency_a4 * (np.power(2., (1./12.)) ** (midi_note_number - concert_midi_note_number_a4))
+
+    return frequency
+
+
+
+
+
 #
 # define a function to test for MIDI value range violation
 #
-def MIDI_number_test_value_ranges(
+def MIDI_number_to_test_value_ranges(
     pitches_as_numbers : np.array,
     MIDI_min_allowed_value : np.int16 = 0,
     MIDI_max_allowed_value : np.int16 = 127,
@@ -58,7 +88,7 @@ def MIDI_number_chromatic_transpose(
     #
     # check note range and throw and exception if MIDI range is violated
     #
-    MIDI_number_test_value_ranges(
+    MIDI_number_to_test_value_ranges(
         pitches_as_numbers,
         MIDI_min_allowed_value = MIDI_min_allowed_value,
         MIDI_max_allowed_value = MIDI_max_allowed_value,
@@ -88,6 +118,11 @@ def main():
     x = MIDI_number_chromatic_transpose(chromatic_scale_numeric, chromatic_interval = 110, verbose = True)
     x = MIDI_number_chromatic_transpose(chromatic_scale_numeric, chromatic_interval = 108, verbose = True)
     #x = MIDI_number_chromatic_transpose(chromatic_scale_numeric, chromatic_interval = 120, verbose = True)
+
+    assert np.all(np.round(MIDI_number_to_frequency(np.array([60, 69, 0])), 4) == np.array([261.6256, 440., 8.1758]))
+
+
+    
     
 if __name__ == '__main__':
     main()
