@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 #
 # import local libraries
 #
-from music_production_and_performance.theory.western.definitions import chromatic_scale_pitch_class_names   # we assume these are ordered correctly starting at C
+from music_production_and_performance.theory.western.scales.chromatic import chromatic_scale_pitch_class_names   # we assume these are ordered correctly starting at C
 
 #
 # define a function to compute chromagrams
