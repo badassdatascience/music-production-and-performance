@@ -21,6 +21,23 @@ class Track():
         self.track_to_analyze_filename = track_to_analyze_filename
         self.track_title = track_title
         self.sampling_rate_for_import = sampling_rate_for_import
+        
+        self.is_fit = False
+
+    def load_track_timeseries(self):
+        #
+        # we are using a single mono channel here for these analyses
+        #
+        self.y, self.sr = librosa.load(
+            self.track_to_analyze_filename,
+            sr = self.sampling_rate_for_import,
+        )  
+
+    def fit(self):
+        self.is_fit = True
+        self.load_track_timeseries()
+
+
 
 class KeyDetection(Track):
     def __init__(
@@ -38,8 +55,7 @@ class KeyDetection(Track):
         self.is_fit = False
 
     def fit(self):
-        self.is_fit = True
-        self.load_track_timeseries()
+        super().fit()
         self.separate_harmonics_and_percussives()
         self.compute_chromagrams()
         self.estimate_key()
@@ -48,7 +64,7 @@ class KeyDetection(Track):
         self.df = pd.merge(
             self.df_estimated_key,
             self.df_uniformity,
-            on = ['track_title', 'track_to_analyze_filename', 'method'],
+            on = ['track_title', 'track_to_analyze_filename', 'method', 'hop_length'],
             how = 'left',
         )
 
@@ -63,15 +79,6 @@ class KeyDetection(Track):
         self.display_key_estimates()
         self.plot_chromagram_boxplot()
     
-    def load_track_timeseries(self):
-        #
-        # we are using a single mono channel here for these analyses
-        #
-        self.y, self.sr = librosa.load(
-            self.track_to_analyze_filename,
-            sr = self.sampling_rate_for_import,
-        )  
-
     def separate_harmonics_and_percussives(self):
         self.y_harmonic, self.y_percussive = librosa.effects.hpss(self.y)
 
@@ -155,6 +162,7 @@ class KeyDetection(Track):
                 'track_title' : self.track_title,
                 'track_to_analyze_filename' : self.track_to_analyze_filename,
                 'method' : method,
+                'hop_length' : self.hop_length,
             }
             
             key_as_chromatic_index = np.argmax(np.mean(chrm, axis = 1))
@@ -174,6 +182,7 @@ class KeyDetection(Track):
                 'track_title' : self.track_title,
                 'track_to_analyze_filename' : self.track_to_analyze_filename,
                 'method' : method,
+                'hop_length' : self.hop_length,
             }
             
             #self.uniformity_metrics[method] = {}
