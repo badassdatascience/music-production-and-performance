@@ -1,6 +1,13 @@
+# Copyright 2025, Emily Marie Williams
+
+#
+# Load required libraries
+#
 import librosa
 
-
+#
+# Define a general-purpose class for loading and storing tracks
+#
 class Track():
     def __init__(
         self,
@@ -11,7 +18,6 @@ class Track():
         self.track_to_analyze_filename = track_to_analyze_filename
         self.track_title = track_title
         self.sampling_rate_for_import = sampling_rate_for_import
-        
         self.is_fit = False
 
     def load_track_timeseries(self):
