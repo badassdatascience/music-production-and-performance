@@ -27,11 +27,15 @@ class KeyDetection(Track):
         hop_length : int = 1024
     ):
         super().__init__(track_to_analyze_filename, track_title, sampling_rate_for_import)
+        
         self.hop_length = hop_length
 
         self.chromagram_method_list = []
         self.chromagram_method_name_list = []
         self.is_fit = False
+
+        # the casting is not strictly necessary, but helps documentation of intent
+        self.hop_length_in_seconds = float(hop_length) / float(sampling_rate_for_import)
 
     def fit(self):
         super().fit()
@@ -48,12 +52,10 @@ class KeyDetection(Track):
         )
 
     def summary_full(self):
-        self.display_key_estimates()
         self.plot_split_harmonics_and_percussives()
         self.display_chromagrams()
         self.plot_chromagram_boxplot()
-        pp.pprint(self.df_uniformity)
-
+        
     def summary_key_detection(self):
         self.display_key_estimates()
         self.plot_chromagram_boxplot()
@@ -90,7 +92,11 @@ class KeyDetection(Track):
         )
         self.chromagram_method_list.append(self.chromagram_stft)
         self.chromagram_method_name_list.append('Short-Time Fourier Transform')
-        
+
+        #
+        # a bit redundant... we can redesign this to use a loop
+        # iterating through the chromagram-generation functions
+        #
         self.chromagram_cqt = librosa.feature.chroma_cqt(
             y = self.y_harmonic,
             sr = self.sampling_rate_for_import,
@@ -120,11 +126,6 @@ class KeyDetection(Track):
             plt.close()
 
     def plot_chromagram_boxplot(self):
-        #for chrm, method in zip(self.chromagram_method_list, self.chromagram_method_name_list):
-            #per_note_chromagram_values_list = []
-            #for note_index in np.arange(0, chrm.shape[0]):
-            #    per_note_chromagram_values_list.append(chrm[note_index, :])
-
         for method in self.chromagram_values_list_per_method_per_note.keys():
             plt.figure()
             plt.boxplot(self.chromagram_values_list_per_method_per_note[method], widths=0.85, showmeans=True, meanline=True)
@@ -142,6 +143,7 @@ class KeyDetection(Track):
                 'track_to_analyze_filename' : self.track_to_analyze_filename,
                 'method' : method,
                 'hop_length' : self.hop_length,
+                'hop_length_in_seconds' : self.hop_length_in_seconds,
             }
             
             key_as_chromatic_index = np.argmax(np.mean(chrm, axis = 1))
@@ -172,15 +174,6 @@ class KeyDetection(Track):
             # dissimilarity indices
             uniformity_metrics['dissimilarity_index'] = 0.5 * np.sum(np.abs(probability_distribution - uniform_distribution))
             
-            # Chi^2 goodness of fit test
-            f_obs = np.round(probability_distribution * 10000)
-            f_exp = [np.sum(f_obs) / N] * N
-            chi2_statistic, p_value = chisquare(f_obs = f_obs, f_exp = f_exp)
-            effect_size_cohens_w = np.sqrt(chi2_statistic / N)
-            uniformity_metrics['chi2_goodness_of_fit_statistic'] = chi2_statistic
-            uniformity_metrics['chi2_goodness_of_fit_p_value'] = p_value
-            uniformity_metrics['chi2_goodness_of_fit_cohens_w'] = effect_size_cohens_w
-
             # kurtosis
             uniformity_metrics['kurtosis'] = kurtosis(probability_distribution)
 
