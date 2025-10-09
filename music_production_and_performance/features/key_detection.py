@@ -1,3 +1,4 @@
+# Copyright 2025, Emily Marie Williams
 
 import librosa
 import pandas as pd
