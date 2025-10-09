@@ -1,29 +1,61 @@
+# Copyright 2025, Emily Marie Williams
+
+#
+# import useful system libraries
+#
 import numpy as np
 import pandas as pd
 import re
 
+#
+# import useful classes from this module
+#
 from music_production_and_performance.theory.western.CircleOfFifths import CircleOfFifths
 from music_production_and_performance.theory.western.scales.chromatic import chromatic_scale_pitch_class_names
-        
+
+#
+# define a class for computing and storing a Camelot wheel,
+# a tool used by DJs to facilitate harmonic mixing invented
+# by the good folks at Mixed In Key
+#
 class CamelotWheel():
 
+    #
+    # constructor
+    #
+    # Enables one to provide their own circle of fifths object
+    #
+    # The static "default" function below allows bypassing this
+    # step to simply compute a version matching Mixed In Key's
+    # Camelot wheel.
+    #
     def __init__(
         self,
         circle_of_fifths : CircleOfFifths,
-    ):
+    ) -> None:
         self.cof = circle_of_fifths
         self.compute_minor_offset()
         self.compute_camelot_wheel()
         self.compute_camelot_dataframe()
-    
+
+    #
+    # given a pitch number element in a pitch class number array,
+    # compute relative minor mode
+    #
     def compute_minor_offset(self) -> None:
         minor_offset_fifths = []
         for pitch_class in self.cof.circle_of_fifths_numeric:
             minor_offset_fifths.append((pitch_class + 9) % 12)
         self.minor_offset_fifths_numeric = np.array(minor_offset_fifths, dtype = np.uint8)
 
+    #
+    # performs the "meat" of camelot wheel computation
+    #
     def compute_camelot_wheel(self) -> None:
 
+        #
+        # Adds the major or minor indicator, "B" or "A" respectively
+        #
         def get_camelot_symbols(symbol) -> np.array:
             return np.array([str(((q + 7) % 12) + 1) + symbol for q in range(0, 12)], dtype = str)
 
@@ -38,6 +70,9 @@ class CamelotWheel():
         )
         self.camelot_combined_minor_and_major = list(zip(self.camelot_wheel_minor_layer, self.camelot_wheel_major_layer))
 
+    #
+    # produces a dataframe summarizing the results
+    #
     def compute_camelot_dataframe(self) -> None:
         df_minor = pd.DataFrame(self.camelot_wheel_minor_layer, columns = ['tonic_pitch_class_minor', 'camelot_minor'])
         df_major = pd.DataFrame(self.camelot_wheel_major_layer, columns = ['tonic_pitch_class_major', 'camelot_major'])
@@ -58,11 +93,17 @@ class CamelotWheel():
             .drop(columns = ['index'])
         )
 
+    #
+    # reports the dataframe with a friendly function name
+    #
+    # (I'll never actually use this in practice... consider it
+    # legacy code from development).
+    #
     def summary(self) -> pd.DataFrame:
         return self.df
 
     #
-    # static function to generate the default Camelot wheel,
+    # define a static function to generate the default Camelot wheel,
     # which should exactly match Mixed In Key's version
     #
     def compute_default_camelot_wheel() -> object:
