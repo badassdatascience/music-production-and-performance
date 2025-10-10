@@ -1,7 +1,7 @@
 import numpy as np
 
-from music_production_and_performance.theory.western.scales.chromatic import chromatic_scale_pitch_class_names
-from music_production_and_performance.theory.western.scales.chromatic import chromatic_scale_numeric
+from badass_music.theory.western.scales.chromatic import chromatic_scale_pitch_class_names
+from badass_music.theory.western.scales.chromatic import chromatic_scale_numeric
 
 class CircleOfFifths():
 

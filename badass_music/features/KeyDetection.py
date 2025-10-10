@@ -12,8 +12,8 @@ from scipy.stats import entropy
 from scipy.stats import chisquare
 from scipy.stats import kurtosis
 
-from music_production_and_performance.features.Track import Track
-from music_production_and_performance.theory.western.scales.chromatic import chromatic_scale_pitch_class_names
+from badass_music.features.Track import Track
+from badass_music.theory.western.scales.chromatic import chromatic_scale_pitch_class_names
 
 #
 # Define class to facilitate key detection

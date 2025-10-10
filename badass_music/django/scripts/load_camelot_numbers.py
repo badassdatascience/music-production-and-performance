@@ -1,8 +1,8 @@
 #
 # import the Django boilerplate code and configuration
 #
-import music_production_and_performance.django.django_boilerplate
-from music_production_and_performance.config import config
+import badass_music.django.django_boilerplate
+from badass_music.config import config
 
 #
 # import useful modules
