@@ -2,7 +2,7 @@
 #
 # get the configuration
 #
-from music_production_and_performance.config import config
+from badass_music.config import config
 
 #
 # load useful libraries

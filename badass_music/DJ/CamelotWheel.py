@@ -10,8 +10,8 @@ import re
 #
 # import useful classes from this module
 #
-from music_production_and_performance.theory.western.CircleOfFifths import CircleOfFifths
-from music_production_and_performance.theory.western.scales.chromatic import chromatic_scale_pitch_class_names
+from badass_music.theory.western.CircleOfFifths import CircleOfFifths
+from badass_music.theory.western.scales.chromatic import chromatic_scale_pitch_class_names
 
 #
 # define a class for computing and storing a Camelot wheel,

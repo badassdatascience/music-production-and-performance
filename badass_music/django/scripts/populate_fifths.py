@@ -1,15 +1,15 @@
 #
 # import the Django boilerplate code and configuration
 #
-import music_production_and_performance.django.django_boilerplate
-from music_production_and_performance.config import config
+import badass_music.django.django_boilerplate
+from badass_music.config import config
 
 #
 # import useful modules
 #
 import pandas as pd
 from theory_western.models import Fifths
-from music_production_and_performance.theory.western.CircleOfFifths import CircleOfFifths
+from badass_music.theory.western.CircleOfFifths import CircleOfFifths
 
 #
 # calculate the circle of fifths

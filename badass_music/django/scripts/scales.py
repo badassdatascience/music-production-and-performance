@@ -9,13 +9,13 @@
 #
 # import the Django boilerplate code
 #
-import music_production_and_performance.django.django_boilerplate
+import badass_music.django.django_boilerplate
 
 #
 # import the modules and scales we need
 #
 from theory_western.models import PitchClass, IntervalSeries
-from music_production_and_performance.theory.western.scales.scales import *
+from badass_music.theory.western.scales.scales import *
 
 #
 # user settings
