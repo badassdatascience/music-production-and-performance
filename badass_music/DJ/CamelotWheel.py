@@ -6,6 +6,7 @@
 import numpy as np
 import pandas as pd
 import re
+import json
 
 #
 # import useful classes from this module
@@ -37,6 +38,7 @@ class CamelotWheel():
         self.compute_minor_offset()
         self.compute_camelot_wheel()
         self.compute_camelot_dataframe()
+        self.compute_json_string()
 
     #
     # given a pitch number element in a pitch class number array,
@@ -102,6 +104,32 @@ class CamelotWheel():
     def summary(self) -> pd.DataFrame:
         return self.df
 
+    #
+    # output JSON suitable for use with D3.js' "Sunburst" graphic
+    #
+    def compute_json_string(self) -> str:
+        to_json_list = []
+        for i, row in self.df.iterrows():
+            to_json_list.append(
+                {
+                    'name' : row['camelot_minor'] + ' - ' + row['tonic_pitch_class_minor'] + ' Minor',
+                    'children' : [
+                        { 
+                            'name' : row['camelot_major'] + ' - ' + row['tonic_pitch_class_major'] + ' Major',
+                            'value' : 1,
+                        }
+                    ]
+                }
+            )
+
+        to_json_full = {
+            'name' : 'Camelot Wheel',
+            'children' : to_json_list,
+        }
+        result = json.dumps(to_json_full)
+        result = result.replace('"name"', 'name').replace('"children"', 'children').replace('"value"', 'value')
+        self.json_string = result
+    
     #
     # define a static function to generate the default Camelot wheel,
     # which should exactly match Mixed In Key's version
