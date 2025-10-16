@@ -81,8 +81,8 @@ if True:
 
         #a = np.array([interval_major_to_chromatic_dict[x] for x in corrected_transposed_basic_interval_mod_8])
 
-        transposed_but_with_wrong_accidentals = major_scale_base_c[corrected_transposed_basic_interval_mod_8 - 1]
-        print(transposed_but_with_wrong_accidentals)
+        modal_transposition = major_scale_base_c[corrected_transposed_basic_interval_mod_8 - 1]
+        print(modal_transposition)
         
         transposed_numeric_but_with_wrong_accidentals = np.array([interval_major_to_chromatic_dict[x] for x in corrected_transposed_basic_interval_mod_8])
         print(transposed_numeric_but_with_wrong_accidentals)
@@ -91,10 +91,20 @@ if True:
         correct_chromatics = np.array([(interval_major_to_chromatic_dict[x] + test_interval_chromatic) % 12 for x in note_list_as_numbers])
         print(correct_chromatics)
 
-        print(correct_chromatics - transposed_numeric_but_with_wrong_accidentals)
+        to_shift = correct_chromatics - transposed_numeric_but_with_wrong_accidentals
+        results = []
+        for pitch_class, step in zip(modal_transposition, to_shift):
+            accidentals = ''
+            if step >= 1:
+                accidentals = '#' * step
+            elif step <= -1:
+                accidentals = 'b' * abs(step)
+            results.append(pitch_class + accidentals)
+        print(results)
+
         
 
-n = 4
+n = 5
 stuff(n, octave_base_interval_numbers)
 
 
