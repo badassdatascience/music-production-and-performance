@@ -81,22 +81,34 @@
     .on("mouseleave", () => tip.style("opacity", 0));
 
       // labels for outer ring (depth 2) and inner ring (depth 1) if there’s room
-    const label = svg.append("g")
-	  .attr("pointer-events", "none")
-	  .attr("text-anchor", "middle")
-	  .selectAll("text")
-	  .data(nodes)
-	  .join("text")
-	  .attr("class", "label")
-	  .attr("transform", d => {
-	      const x = (d.x0 + d.x1) / 2;
-	      const y = (d.y0 + d.y1) / 2;
-	      const angle = (x * 180 / Math.PI) - 90;
-	      return `rotate(${angle}) translate(${y},0) rotate(${angle < 90 || angle >= 270 ? 0 : 180})`;
-	  })
-	  .attr("dy", "0.35em")
-	  .text(d => d.data.name)
-	  .style("display", d => ((d.x1 - d.x0) > 0.06 ? null : "none")); // hide cramped labels
+      //
+      // I got some help from ChatGPT 5 (auto mode) for the line breaks on this one:
+      const label = svg.append("g")
+	    .attr("pointer-events", "none")
+	    .attr("text-anchor", "middle")
+	    .selectAll("text")
+	    .data(nodes)
+	    .join("text")
+	    .attr("class", "label")
+	    .attr("transform", d => {
+		const x = (d.x0 + d.x1) / 2;
+		const y = (d.y0 + d.y1) / 2;
+		const angle = (x * 180 / Math.PI) - 90;
+		return `rotate(${angle}) translate(${y},0) rotate(${angle < 90 || angle >= 270 ? 0 : 180})`;
+	    })
+	    .attr("dy", "0.35em")
+	    .each(function(d) {
+		const parts = d.data.name.split(" - ");
+		d3.select(this).selectAll("tspan")
+		    .data(parts)
+		    .join("tspan")
+		    .attr("x", 0)
+		    .attr("dy", (p, i) => i === 0 ? 0 : "1.2em")
+		    .style("font-size", (p, i) => i === 0 ? "45px" : "30px") // 👈 Bigger font on first line
+		    .text(p => p);
+	    })
+	    .style("display", d => ((d.x1 - d.x0) > 0.06 ? null : "none"));
+
     </script>
 
   </body>
